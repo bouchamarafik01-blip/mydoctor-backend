@@ -1,0 +1,104 @@
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "full_name": "Hadjer Patient",
+  "email": "test@example.com",
+  "password": "Password123",
+  "role": "patient"
+}
+###
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password123"
+}
+
+
+### تسجيل طبيب جديد
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "full_name": "د. أحمد علي",
+  "email": "doctor@example.com",
+  "password": "Password123",
+  "role": "doctor",
+  "specialty": "أمراض صدرية",
+  "latitude": 36.1901,
+  "longitude": 5.4106
+}
+
+### تسجيل دخول الطبيب للحصول على Token
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "doctor@example.com",
+  "password": "Password123"
+}
+
+### تسجيل حساب أدمن
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "full_name": "Hadjer Admin",
+  "email": "admin@example.com",
+  "password": "Password123",
+  "role": "admin"
+}
+
+### تسجيل دخول الأدمن
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "Password123"
+}
+
+### اعتماد الطبيب من طرف الأدمن
+PATCH http://localhost:5000/api/admin/doctors/1/verify
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlhdCI6MTc4OTQwNjQxOCwiZXhwIjoxNzkwMDExMjE4fQ.5aVXRGscH7Boi_5TvUWWsOAbkZOne6nfDOzHnmhCrXc 
+Content-Type: application/json
+
+### جلب قائمة الأطباء (البحث الجغرافي)
+GET http://localhost:5000/api/doctors?lat=36.1901&lng=5.4106
+
+### حجز موعد عند الطبيب رقم 1
+POST http://localhost:5000/api/appointments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InBhdGllbnQiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODk0Mjc0MjIsImV4cCI6MTc5MDAzMjIyMn0.fk-adYJkPNh2bogG4e8ACizmtUcPWT1sXVDctPJTrqQ 
+Content-Type: application/json
+
+{
+  "doctor_id": 1,
+  "appointment_date": "2026-09-20",
+  "appointment_time": "10:00",
+  "notes": "فحص أمراض صدرية"
+}
+
+### 1. عرض مواعيد المستخدم الحالي
+GET http://localhost:5000/api/appointments/my-appointments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InBhdGllbnQiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODk0MzM0NTAsImV4cCI6MTc5MDAzODI1MH0.7lu6gIH_ONzwkeRs9QagdKarJAOVJNe7w_JFbalnAVE 
+
+### 2. تغيير حالة الموعد (تأكيد أو إلغاء)
+PATCH http://localhost:5000/api/appointments/1/status
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImRvY3RvciIsImVtYWlsIjoiZG9jdG9yQGV4YW1wbGUuY29tIiwiaWF0IjoxNzg5NDMzNTM1LCJleHAiOjE3OTAwMzgzMzV9.sCLFxRSuHLxRv0Yt5mOm_hBr0Bw0dnzD_mD-tLiA3vQ 
+Content-Type: application/json
+
+{
+  "status": "confirmed"
+}
+
+### 1. جلب قائمة جميع التخصصات الطبية
+GET http://localhost:5000/api/specialties
+
+### 2. جلب قائمة البلديات
+GET http://localhost:5000/api/municipalities
+
+### 3. جلب بلديات ولاية محددة (مثال: سطيف)
+GET http://localhost:5000/api/municipalities?wilaya=سطيف
