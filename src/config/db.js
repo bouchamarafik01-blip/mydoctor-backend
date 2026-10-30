@@ -1,6 +1,9 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+const { Pool } = require('pg');
+require('dotenv').config();
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -8,7 +11,6 @@ const pool = new Pool({
   }
 });
 
-// اختبار الاتصال بقاعدة البيانات عند تشغيل السيرفر
 pool.connect((err, client, release) => {
   if (err) {
     console.error('❌ فشل الاتصال بقاعدة البيانات:', err.stack);
